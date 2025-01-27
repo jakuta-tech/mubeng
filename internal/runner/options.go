@@ -4,9 +4,9 @@ import (
 	"flag"
 	"time"
 
+	"github.com/mubeng/mubeng/common"
+	"github.com/mubeng/mubeng/internal/updater"
 	"github.com/projectdiscovery/gologger"
-	"ktbs.dev/mubeng/common"
-	"ktbs.dev/mubeng/internal/updater"
 )
 
 // Options defines the values needed to execute the Runner.
@@ -25,11 +25,16 @@ func Options() *common.Options {
 	flag.BoolVar(&opt.Check, "c", false, "")
 	flag.BoolVar(&opt.Check, "check", false, "")
 
+	flag.StringVar(&opt.CC, "only-cc", "", "")
+
 	flag.DurationVar(&opt.Timeout, "t", 30*time.Second, "")
 	flag.DurationVar(&opt.Timeout, "timeout", 30*time.Second, "")
 
 	flag.IntVar(&opt.Rotate, "r", 1, "")
 	flag.IntVar(&opt.Rotate, "rotate", 1, "")
+
+	flag.BoolVar(&opt.RotateOnErr, "rotate-on-error", false, "")
+	flag.BoolVar(&opt.RemoveOnErr, "remove-on-error", false, "")
 
 	flag.StringVar(&opt.Method, "m", "sequent", "")
 	flag.StringVar(&opt.Method, "method", "sequent", "")
@@ -51,6 +56,16 @@ func Options() *common.Options {
 
 	flag.BoolVar(&version, "V", false, "")
 	flag.BoolVar(&version, "version", false, "")
+
+	flag.BoolVar(&opt.Watch, "w", false, "")
+	flag.BoolVar(&opt.Watch, "watch", false, "")
+
+	flag.IntVar(&opt.Goroutine, "g", 50, "")
+	flag.IntVar(&opt.Goroutine, "goroutine", 50, "")
+
+	flag.IntVar(&opt.MaxErrors, "max-errors", 3, "")
+	flag.IntVar(&opt.MaxRedirects, "max-redirs", 10, "")
+	flag.IntVar(&opt.MaxRetries, "max-retries", 0, "")
 
 	flag.Usage = func() {
 		showBanner()
